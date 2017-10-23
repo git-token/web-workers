@@ -1,0 +1,26 @@
+{
+  "name": "gittoken-web-workers",
+  "version": "0.0.1",
+  "description": "GitToken Web Workers",
+  "main": "./dist/index.js",
+  "scripts": {
+    "test": "mocha",
+    "build": "babel ./src/ --out-dir ./dist"
+  },
+  "keywords": [
+    "GitToken",
+    "Ethereum",
+    "Solidity",
+    "Git",
+    "Token",
+    "ERC20",
+    "Web Worker"
+  ],
+  "author": "Ryan Tate <ryan.tate@gittoken.io>",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "babel-env": "^2.4.1",
+    "babel-preset-stage-0": "^6.24.1"
+  }
+}
