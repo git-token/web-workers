@@ -31,3 +31,6 @@ export default class GitTokenAuctionWorker {
   }
 
 }
+
+
+const auction = new GitTokenAuctionWorker({})

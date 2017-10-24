@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
@@ -20,7 +20,6 @@
   "license": "MIT",
   "dependencies": {},
   "devDependencies": {
-    "babel-env": "^2.4.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-env": "^2.4.1"
   }
 }

@@ -10,21 +10,21 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var GitTokenVotingWorker = function () {
-  function GitTokenVotingWorker(_ref) {
+var GitTokenAdminWorker = function () {
+  function GitTokenAdminWorker(_ref) {
     _objectDestructuringEmpty(_ref);
 
-    _classCallCheck(this, GitTokenVotingWorker);
+    _classCallCheck(this, GitTokenAdminWorker);
 
     this.listen();
   }
 
-  _createClass(GitTokenVotingWorker, [{
+  _createClass(GitTokenAdminWorker, [{
     key: 'listen',
     value: function listen() {
       var _this = this;
 
-      console.log('GitToken Voting Web Worker Listening for Events');
+      console.log('GitToken Admin Web Worker Listening for Events');
       addEventListener('message', function (msg) {
         var _JSON$parse = JSON.parse(msg.data),
             event = _JSON$parse.event,
@@ -49,7 +49,10 @@ var GitTokenVotingWorker = function () {
     }
   }]);
 
-  return GitTokenVotingWorker;
+  return GitTokenAdminWorker;
 }();
 
-exports.default = GitTokenVotingWorker;
+exports.default = GitTokenAdminWorker;
+
+
+var worker = new GitTokenAdminWorker({});

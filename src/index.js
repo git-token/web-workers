@@ -1,9 +1,11 @@
-import GitTokenAuctionWorker from './GitTokenAuctionWorker.js'
-import GitTokenAdminWorker from './GitTokenAdminWorker.js'
-import GitTokenVotingWorker from './GitTokenVotingWorker.js'
+import AuctionWorker from './Auction.worker.js'
+import AdminWorker from './Admin.worker.js'
+import VotingWorker from './Voting.worker.js'
+import RegistryWorker from './Registry.worker.js'
 
 export {
-  GitTokenAuctionWorker,
-  GitTokenAdminWorker,
-  GitTokenVotingWorker
+  AuctionWorker,
+  AdminWorker,
+  VotingWorker,
+  RegistryWorker
 }

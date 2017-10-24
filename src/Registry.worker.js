@@ -1,10 +1,10 @@
-export default class GitTokenVotingWorker {
+export default class GitTokenRegistryWorker {
   constructor({ }) {
     this.listen()
   }
 
   listen() {
-    console.log('GitToken Voting Web Worker Listening for Events')
+    console.log('GitToken Registry Web Worker Listening for Events')
     addEventListener('message', (msg) => {
       const { event, values } = JSON.parse(msg.data)
       switch(event) {
@@ -23,3 +23,5 @@ export default class GitTokenVotingWorker {
   }
 
 }
+
+const worker = new GitTokenRegistryWorker({})

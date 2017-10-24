@@ -10,30 +10,27 @@ function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var GitTokenAuctionWorker = function () {
-  function GitTokenAuctionWorker(_ref) {
+var GitTokenRegistryWorker = function () {
+  function GitTokenRegistryWorker(_ref) {
     _objectDestructuringEmpty(_ref);
 
-    _classCallCheck(this, GitTokenAuctionWorker);
+    _classCallCheck(this, GitTokenRegistryWorker);
 
     this.listen();
   }
 
-  _createClass(GitTokenAuctionWorker, [{
+  _createClass(GitTokenRegistryWorker, [{
     key: 'listen',
     value: function listen() {
       var _this = this;
 
-      console.log('GitToken Auction Web Worker Listening for Events');
+      console.log('GitToken Registry Web Worker Listening for Events');
       addEventListener('message', function (msg) {
         var _JSON$parse = JSON.parse(msg.data),
             event = _JSON$parse.event,
             values = _JSON$parse.values;
 
         switch (event) {
-          case 'highestBid':
-            _this.highestBid({ bids: values });
-            break;
           default:
             _this.handleErrorMessage({
               error: 'Invalid Event: ' + event
@@ -50,16 +47,12 @@ var GitTokenAuctionWorker = function () {
         error: error ? error : 'Unhandled Error'
       }));
     }
-  }, {
-    key: 'highestBid',
-    value: function highestBid(_ref3) {
-      var bids = _ref3.bids;
-
-      console.log('highestBid::bids', bids);
-    }
   }]);
 
-  return GitTokenAuctionWorker;
+  return GitTokenRegistryWorker;
 }();
 
-exports.default = GitTokenAuctionWorker;
+exports.default = GitTokenRegistryWorker;
+
+
+var worker = new GitTokenRegistryWorker({});

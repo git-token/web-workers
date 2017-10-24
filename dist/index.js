@@ -3,22 +3,27 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.GitTokenVotingWorker = exports.GitTokenAdminWorker = exports.GitTokenAuctionWorker = undefined;
+exports.RegistryWorker = exports.VotingWorker = exports.AdminWorker = exports.AuctionWorker = undefined;
 
-var _GitTokenAuctionWorker = require('./GitTokenAuctionWorker.js');
+var _AuctionWorker = require('./Auction.worker.js');
 
-var _GitTokenAuctionWorker2 = _interopRequireDefault(_GitTokenAuctionWorker);
+var _AuctionWorker2 = _interopRequireDefault(_AuctionWorker);
 
-var _GitTokenAdminWorker = require('./GitTokenAdminWorker.js');
+var _AdminWorker = require('./Admin.worker.js');
 
-var _GitTokenAdminWorker2 = _interopRequireDefault(_GitTokenAdminWorker);
+var _AdminWorker2 = _interopRequireDefault(_AdminWorker);
 
-var _GitTokenVotingWorker = require('./GitTokenVotingWorker.js');
+var _VotingWorker = require('./Voting.worker.js');
 
-var _GitTokenVotingWorker2 = _interopRequireDefault(_GitTokenVotingWorker);
+var _VotingWorker2 = _interopRequireDefault(_VotingWorker);
+
+var _RegistryWorker = require('./Registry.worker.js');
+
+var _RegistryWorker2 = _interopRequireDefault(_RegistryWorker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.GitTokenAuctionWorker = _GitTokenAuctionWorker2.default;
-exports.GitTokenAdminWorker = _GitTokenAdminWorker2.default;
-exports.GitTokenVotingWorker = _GitTokenVotingWorker2.default;
+exports.AuctionWorker = _AuctionWorker2.default;
+exports.AdminWorker = _AdminWorker2.default;
+exports.VotingWorker = _VotingWorker2.default;
+exports.RegistryWorker = _RegistryWorker2.default;
