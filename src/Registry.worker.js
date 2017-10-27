@@ -1,3 +1,5 @@
+import GitTokenRegistry from 'gittoken-contracts/build/contracts/GitTokenRegistry.json'
+
 export default class GitTokenRegistryWorker {
   constructor({ }) {
     this.listen()
