@@ -18,9 +18,9 @@ var _githubApi = require('github-api');
 
 var _githubApi2 = _interopRequireDefault(_githubApi);
 
-var _requestPromise = require('request-promise');
+var _browserRequest = require('browser-request');
 
-var _requestPromise2 = _interopRequireDefault(_requestPromise);
+var _browserRequest2 = _interopRequireDefault(_browserRequest);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119,10 +119,13 @@ var GitTokenRegistryWorker = function () {
 
       this.validateAdmin(details).then(function (validated) {
         console.log('validated', validated);
-        return (0, _requestPromise2.default)({
+        return (0, _browserRequest2.default)({
           method: 'POST',
           uri: _this2.registryAPI + '/verify/' + organization,
           body: details
+        }, function (error, result) {
+          console.log('error', error);
+          console.log('result', result);
         });
       }).then(function (verified) {
         postMessage(JSON.stringify({ verified: verified }));

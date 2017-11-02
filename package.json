@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
@@ -20,10 +20,9 @@
   "license": "MIT",
   "dependencies": {
     "bluebird": "^3.5.1",
+    "browser-request": "^0.3.3",
     "github-api": "^3.0.0",
-    "gittoken-contracts": "0.0.48",
-    "request": "^2.83.0",
-    "request-promise": "^4.2.2"
+    "gittoken-contracts": "0.0.48"
   },
   "devDependencies": {
     "babel-env": "^2.4.1"
