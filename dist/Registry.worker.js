@@ -113,22 +113,24 @@ var GitTokenRegistryWorker = function () {
   }, {
     key: 'verifyOrganization',
     value: function verifyOrganization(details) {
-      var _this2 = this;
-
-      var organization = details.organization;
+      var organization = details.organization,
+          uri = details.uri;
 
       this.validateAdmin(details).then(function (validated) {
         console.log('validated', validated);
         return (0, _browserRequest2.default)({
           method: 'POST',
-          uri: _this2.registryAPI + '/verify/' + organization,
+          uri: uri,
           body: details
         }, function (error, result) {
-          console.log('error', error);
-          console.log('result', result);
+          if (error) {
+            throw error;
+          }
+          postMessage(JSON.stringify({
+            event: 'organization_verified',
+            payload: result
+          }));
         });
-      }).then(function (verified) {
-        postMessage(JSON.stringify({ verified: verified }));
       }).catch(function (error) {
         console.log('error', error);
       });

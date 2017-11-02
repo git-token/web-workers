@@ -65,19 +65,20 @@ export default class GitTokenRegistryWorker {
   }
 
   verifyOrganization(details) {
-    const { organization } = details
+    const { organization, uri } = details
     this.validateAdmin(details).then((validated) => {
       console.log('validated', validated)
       return request({
         method: 'POST',
-        uri: `${this.registryAPI}/verify/${organization}`,
+        uri,
         body: details
       }, (error, result) => {
-        console.log('error', error)
-        console.log('result', result)
+        if (error) { throw error; }
+        postMessage(JSON.stringify({
+          event: 'organization_verified',
+          payload: result
+        }))
       })
-    }).then((verified) => {
-      postMessage(JSON.stringify({ verified }))
     }).catch((error) => {
       console.log('error', error)
     })
