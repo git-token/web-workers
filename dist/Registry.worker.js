@@ -6,6 +6,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _bluebird = require('bluebird');
+
+var _bluebird2 = _interopRequireDefault(_bluebird);
+
 var _GitTokenRegistry = require('gittoken-contracts/build/contracts/GitTokenRegistry.json');
 
 var _GitTokenRegistry2 = _interopRequireDefault(_GitTokenRegistry);
@@ -50,7 +54,7 @@ var GitTokenRegistryWorker = function () {
           case 'verify_organization':
             return _this.verifyOrganization(payload);
             break;
-          case 'set_config':
+          case 'configure':
             return _this.setConfig(payload);
             break;
           default:
@@ -66,7 +70,10 @@ var GitTokenRegistryWorker = function () {
       var registryAPI = _ref2.registryAPI;
 
       this.registryAPI = this.registryAPI;
-      postMessage(JSON.stringify({ msg: 'configured' }));
+      postMessage(JSON.stringify({
+        event: 'configured',
+        payload: { configured: true }
+      }));
     }
   }, {
     key: 'validateAdmin',
@@ -75,13 +82,13 @@ var GitTokenRegistryWorker = function () {
           token = _ref3.token,
           organization = _ref3.organization;
 
-      return new Promise(function (resolve, reject) {
+      return new _bluebird2.default(function (resolve, reject) {
         // console.log('username, token, organization', username, token, organization)
         var github = new _githubApi2.default({ username: username, token: token });
         var user = github.getUser();
         var org = github.getOrganization(organization);
         var profile = void 0;
-        Promise.resolve(user.getProfile()).then(function (_ref4) {
+        _bluebird2.default.resolve(user.getProfile()).then(function (_ref4) {
           var data = _ref4.data;
 
           profile = data;

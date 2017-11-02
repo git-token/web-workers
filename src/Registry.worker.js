@@ -1,3 +1,4 @@
+import Promise from 'bluebird'
 import GitTokenRegistry from 'gittoken-contracts/build/contracts/GitTokenRegistry.json'
 import GitHubAPI from 'github-api'
 import axios, { post } from 'axios'
@@ -17,7 +18,7 @@ export default class GitTokenRegistryWorker {
         case 'verify_organization':
           return this.verifyOrganization(payload)
           break;
-        case 'set_config':
+        case 'configure':
           return this.setConfig(payload)
           break;
         default:
@@ -30,7 +31,10 @@ export default class GitTokenRegistryWorker {
 
   setConfig({ registryAPI }) {
     this.registryAPI = this.registryAPI
-    postMessage(JSON.stringify({ msg: 'configured' }))
+    postMessage(JSON.stringify({
+      event: 'configured',
+      payload: { configured: true }
+    }))
   }
 
   validateAdmin({ username, token, organization }) {
