@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
@@ -19,10 +19,11 @@
   "author": "Ryan Tate <ryan.tate@gittoken.io>",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.17.0",
     "bluebird": "^3.5.1",
     "github-api": "^3.0.0",
-    "gittoken-contracts": "0.0.48"
+    "gittoken-contracts": "0.0.48",
+    "request": "^2.83.0",
+    "request-promise": "^4.2.2"
   },
   "devDependencies": {
     "babel-env": "^2.4.1"

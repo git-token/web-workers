@@ -18,9 +18,9 @@ var _githubApi = require('github-api');
 
 var _githubApi2 = _interopRequireDefault(_githubApi);
 
-var _axios = require('axios');
+var _requestPromise = require('request-promise');
 
-var _axios2 = _interopRequireDefault(_axios);
+var _requestPromise2 = _interopRequireDefault(_requestPromise);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -119,7 +119,11 @@ var GitTokenRegistryWorker = function () {
 
       this.validateAdmin(details).then(function (validated) {
         console.log('validated', validated);
-        return (0, _axios.post)(_this2.registryAPI + '/verify/' + organization, details);
+        return (0, _requestPromise2.default)({
+          method: 'POST',
+          uri: _this2.registryAPI + '/verify/' + organization,
+          body: details
+        });
       }).then(function (verified) {
         postMessage(JSON.stringify({ verified: verified }));
       }).catch(function (error) {

@@ -1,7 +1,7 @@
 import Promise from 'bluebird'
 import GitTokenRegistry from 'gittoken-contracts/build/contracts/GitTokenRegistry.json'
 import GitHubAPI from 'github-api'
-import axios, { post } from 'axios'
+import rp from 'request-promise'
 // import Web3 from 'web3'
 
 export default class GitTokenRegistryWorker {
@@ -67,7 +67,11 @@ export default class GitTokenRegistryWorker {
     const { organization } = details
     this.validateAdmin(details).then((validated) => {
       console.log('validated', validated)
-      return post(`${this.registryAPI}/verify/${organization}`, details)
+      return rp({
+        method: 'POST',
+        uri: `${this.registryAPI}/verify/${organization}`,
+        body: details
+      })
     }).then((verified) => {
       postMessage(JSON.stringify({ verified }))
     }).catch((error) => {
