@@ -65,6 +65,7 @@ export default class GitTokenRegistryWorker {
   }
 
   verifyOrganization(details) {
+    console.log('verifyOrganization::details', details)
     const { organization, uri } = details
     this.validateAdmin(details).then((validated) => {
       console.log('validated', validated)

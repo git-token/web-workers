@@ -113,6 +113,7 @@ var GitTokenRegistryWorker = function () {
   }, {
     key: 'verifyOrganization',
     value: function verifyOrganization(details) {
+      console.log('verifyOrganization::details', details);
       var organization = details.organization,
           uri = details.uri;
 
