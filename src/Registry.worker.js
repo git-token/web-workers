@@ -14,6 +14,7 @@ export default class GitTokenRegistryWorker {
   listen() {
     console.log('GitToken Registry Web Worker Listening for Events')
     addEventListener('message', (msg) => {
+      console.log('msg', msg)
       const { event, payload } = JSON.parse(msg.data)
       switch(event) {
         case 'verify_organization':
@@ -76,6 +77,7 @@ export default class GitTokenRegistryWorker {
         json: true
       }, (error, result) => {
         if (error) { throw error; }
+        console.log('result', result)
         postMessage(JSON.stringify({
           event: 'organization_verified',
           payload: result

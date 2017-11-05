@@ -46,6 +46,8 @@ var GitTokenRegistryWorker = function () {
 
       console.log('GitToken Registry Web Worker Listening for Events');
       addEventListener('message', function (msg) {
+        console.log('msg', msg);
+
         var _JSON$parse = JSON.parse(msg.data),
             event = _JSON$parse.event,
             payload = _JSON$parse.payload;
@@ -128,6 +130,7 @@ var GitTokenRegistryWorker = function () {
           if (error) {
             throw error;
           }
+          console.log('result', result);
           postMessage(JSON.stringify({
             event: 'organization_verified',
             payload: result
