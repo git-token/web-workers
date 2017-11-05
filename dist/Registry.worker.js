@@ -122,7 +122,7 @@ var GitTokenRegistryWorker = function () {
         return (0, _browserRequest2.default)({
           method: 'POST',
           uri: uri,
-          body: details
+          body: JSON.stringify(details)
         }, function (error, result) {
           if (error) {
             throw error;

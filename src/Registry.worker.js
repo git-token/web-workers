@@ -72,7 +72,7 @@ export default class GitTokenRegistryWorker {
       return request({
         method: 'POST',
         uri,
-        body: details
+        body: JSON.stringify(details)
       }, (error, result) => {
         if (error) { throw error; }
         postMessage(JSON.stringify({
