@@ -14,7 +14,6 @@ export default class GitTokenRegistryWorker {
   listen() {
     console.log('GitToken Registry Web Worker Listening for Events')
     addEventListener('message', (msg) => {
-      console.log('msg', msg)
       const { event, payload } = JSON.parse(msg.data)
       switch(event) {
         case 'verify_organization':
@@ -67,8 +66,8 @@ export default class GitTokenRegistryWorker {
 
   verifyOrganization(details) {
     console.log('verifyOrganization::details', details)
-    const { organization, uri } = details
-    this.validateAdmin(details).then((validated) => {
+    const { username, token, organization, uri } = details
+    this.validateAdmin({ username, token, organization }).then((validated) => {
       console.log('validated', validated)
       return request({
         method: 'POST',

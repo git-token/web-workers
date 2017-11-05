@@ -46,8 +46,6 @@ var GitTokenRegistryWorker = function () {
 
       console.log('GitToken Registry Web Worker Listening for Events');
       addEventListener('message', function (msg) {
-        console.log('msg', msg);
-
         var _JSON$parse = JSON.parse(msg.data),
             event = _JSON$parse.event,
             payload = _JSON$parse.payload;
@@ -116,10 +114,12 @@ var GitTokenRegistryWorker = function () {
     key: 'verifyOrganization',
     value: function verifyOrganization(details) {
       console.log('verifyOrganization::details', details);
-      var organization = details.organization,
+      var username = details.username,
+          token = details.token,
+          organization = details.organization,
           uri = details.uri;
 
-      this.validateAdmin(details).then(function (validated) {
+      this.validateAdmin({ username: username, token: token, organization: organization }).then(function (validated) {
         console.log('validated', validated);
         return (0, _browserRequest2.default)({
           method: 'POST',
