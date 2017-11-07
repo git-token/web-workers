@@ -10,9 +10,9 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _GitTokenRegistry = require('gittoken-contracts/build/contracts/GitTokenRegistry.json');
+var _Registry = require('gittoken-contracts/build/contracts/Registry.json');
 
-var _GitTokenRegistry2 = _interopRequireDefault(_GitTokenRegistry);
+var _Registry2 = _interopRequireDefault(_Registry);
 
 var _githubApi = require('github-api');
 

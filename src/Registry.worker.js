@@ -1,5 +1,5 @@
 import Promise, { promisifyAll } from 'bluebird'
-import GitTokenRegistry from 'gittoken-contracts/build/contracts/GitTokenRegistry.json'
+import Registry from 'gittoken-contracts/build/contracts/Registry.json'
 import GitHubAPI from 'github-api'
 import request from 'browser-request'
 
