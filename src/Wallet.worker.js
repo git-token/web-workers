@@ -5,10 +5,9 @@ import { ecsign, sha3 } from 'ethereumjs-util'
 import request from 'browser-request'
 import PouchDB from 'pouchdb'
 
-// NOTE: window is not defined in web worker, set the lightwallet equal to a const variable
-// rather than importing and attaching to undefined window object
-const lightwallet = require('eth-lightwallet/dist/lightwallet.min.js')
-const { keystore } = lightwallet
+import { keystore } from 'eth-lightwallet/dist/lightwallet.min.js'
+
+let window = {}
 
 export default class GitTokenWalletWorker {
   constructor({ ethereumProvider, torvaldsProvider }) {

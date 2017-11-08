@@ -24,14 +24,13 @@ var _pouchdb = require('pouchdb');
 
 var _pouchdb2 = _interopRequireDefault(_pouchdb);
 
+var _lightwalletMin = require('eth-lightwallet/dist/lightwallet.min.js');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-// NOTE: window is not defined in web worker, set the lightwallet equal to a const variable
-// rather than importing and attaching to undefined window object
-var lightwallet = require('eth-lightwallet/dist/lightwallet.min.js');
-var keystore = lightwallet.keystore;
+var window = {};
 
 var GitTokenWalletWorker = function () {
   function GitTokenWalletWorker(_ref) {
@@ -59,7 +58,7 @@ var GitTokenWalletWorker = function () {
       var password = _ref2.password;
 
       return new _bluebird2.default(function (resolve, reject) {
-        keystore.createVault({ password: password }, function (error, ks) {
+        _lightwalletMin.keystore.createVault({ password: password }, function (error, ks) {
           if (error) {
             reject(error);
           }
