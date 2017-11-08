@@ -7,7 +7,7 @@ import levelup from 'levelup'
 
 export default class GitTokenWalletWorker {
   constructor({ }) {
-    this.db = levelup('gittoken-wallet', { db: leveljs })
+    this.db = levelup(leveljs('gittoken-wallet'))
 
     this.dbWriteStream = this.db.createWriteStream()
     this.dbReadStream  = this.db.createReadStream()
