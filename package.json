@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.40",
+  "version": "0.0.41",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "dependencies": {
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
-    "bitcore-lib": "^0.14.0",
+    "bitcore-lib": "^0.15.0",
     "bluebird": "^3.5.1",
     "browser-request": "^0.3.3",
     "eth-lightwallet": "^2.5.6",
