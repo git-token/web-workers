@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.20",
+  "version": "0.0.22",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
@@ -23,7 +23,8 @@
     "browser-request": "^0.3.3",
     "github-api": "^3.0.0",
     "gittoken-contracts": "0.0.56",
-    "level-js": "^2.2.4"
+    "level-js": "^2.2.4",
+    "levelup": "^2.0.0"
   },
   "devDependencies": {
     "babel-env": "^2.4.1"

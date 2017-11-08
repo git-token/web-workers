@@ -32,7 +32,7 @@ var GitTokenWalletWorker = function () {
 
     _classCallCheck(this, GitTokenWalletWorker);
 
-    this.db = (0, _levelJs2.default)('gittoken-wallet');
+    this.db = levelup('gittoken-wallet', { db: _levelJs2.default });
 
     this.dbWriteStream = this.db.createWriteStream();
     this.dbReadStream = this.db.createReadStream();
