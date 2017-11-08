@@ -14,14 +14,6 @@ var _browserRequest = require('browser-request');
 
 var _browserRequest2 = _interopRequireDefault(_browserRequest);
 
-var _levelJs = require('level-js');
-
-var _levelJs2 = _interopRequireDefault(_levelJs);
-
-var _levelup = require('levelup');
-
-var _levelup2 = _interopRequireDefault(_levelup);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
@@ -36,18 +28,9 @@ var GitTokenWalletWorker = function () {
 
     _classCallCheck(this, GitTokenWalletWorker);
 
-    this.db = (0, _levelup2.default)((0, _levelJs2.default)('gittoken-wallet'));
+    this.db = indexDB.open('gittoken-wallet');
 
-    this.dbWriteStream = this.db.createWriteStream();
-    this.dbReadStream = this.db.createReadStream();
-
-    this.dbReadStream.on('data', function (data) {
-      console.log('GitTokenWalletWorker::Wrote Data to DB', data);
-      postMessage(JSON.stringify({
-        event: 'data_saved',
-        payload: { data: data }
-      }));
-    });
+    console.log('this.db', this.db);
 
     this.listen();
   }
@@ -68,7 +51,6 @@ var GitTokenWalletWorker = function () {
             var key = payload.key,
                 value = payload.value;
 
-            _this.dbWriteStream.write({ key: key, value: value });
             break;
           default:
             _this.handleErrorMessage({

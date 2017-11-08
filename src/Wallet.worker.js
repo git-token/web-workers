@@ -1,24 +1,13 @@
 import Promise, { promisifyAll } from 'bluebird'
 import request from 'browser-request'
-import leveljs from 'level-js'
-import levelup from 'levelup'
 
 // import Web3 from 'web3'
 
 export default class GitTokenWalletWorker {
   constructor({ }) {
-    this.db = levelup(leveljs('gittoken-wallet'))
+    this.db = indexDB.open('gittoken-wallet')
 
-    this.dbWriteStream = this.db.createWriteStream()
-    this.dbReadStream  = this.db.createReadStream()
-
-    this.dbReadStream.on('data', (data) => {
-      console.log('GitTokenWalletWorker::Wrote Data to DB', data)
-      postMessage(JSON.stringify({
-        event: 'data_saved',
-        payload: { data }
-      }))
-    })
+    console.log('this.db', this.db)
 
     this.listen()
   }
@@ -30,7 +19,6 @@ export default class GitTokenWalletWorker {
       switch(event) {
         case 'save_data':
           const { key, value } = payload
-          this.dbWriteStream.write({ key, value })
           break;
         default:
           this.handleErrorMessage({
