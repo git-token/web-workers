@@ -18,10 +18,6 @@ var _ethereumjsUtil = require('ethereumjs-util');
 
 var _ethLightwallet = require('eth-lightwallet');
 
-var _bitcoreLib = require('bitcore-lib');
-
-var _bitcoreLib2 = _interopRequireDefault(_bitcoreLib);
-
 var _browserRequest = require('browser-request');
 
 var _browserRequest2 = _interopRequireDefault(_browserRequest);
