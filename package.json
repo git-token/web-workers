@@ -1,11 +1,11 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.35",
+  "version": "0.0.37",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
     "test": "mocha",
-    "build": "babel ./src/ --out-dir ./dist"
+    "build": "npx babel ./src/ --out-dir ./dist"
   },
   "keywords": [
     "GitToken",
@@ -19,7 +19,8 @@
   "author": "Ryan Tate <ryan.tate@gittoken.io>",
   "license": "MIT",
   "dependencies": {
-    "bitcore-lib": "^0.15.0",
+    "babel-plugin-transform-react-constant-elements": "^6.23.0",
+    "bitcore-lib": "^0.14.0",
     "bluebird": "^3.5.1",
     "browser-request": "^0.3.3",
     "eth-lightwallet": "^2.5.6",
@@ -32,6 +33,17 @@
     "pouchdb": "^6.3.4"
   },
   "devDependencies": {
-    "babel-env": "^2.4.1"
+    "babel-cli": "^6.26.0",
+    "babel-env": "^2.4.1",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-inline-import": "^2.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators": "^6.24.1",
+    "babel-plugin-transform-react-inline-elements": "^6.22.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-react": "^6.24.1",
+    "babel-preset-stage-0": "^6.24.1"
   }
 }
