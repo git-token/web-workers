@@ -24,16 +24,20 @@ export default class GitTokenWalletWorker {
     addEventListener('message', (msg) => {
       const { event, payload } = JSON.parse(msg.data)
       switch(event) {
-        // case 'WALLET_CREATE_KEYSTORE':
-        //   const { password } = payload
-        //   console.log('password', password)
-        //   this.createKeystore({ password }).then((addresses) => {
-        //     postMessage(JSON.stringify({
-        //       event: 'WALLET_ADDRESSES',
-        //       payload: addresses
-        //     }))
-        //   }).catch((error) => this.handleErrorMessage({ error }))
-        //   break;
+        case 'SAVE_KEYSTORE':
+          this.db.put({
+            _id: 'keystore',
+            serialized: payload['serialized']
+          }).then(() => {
+            return this.db.get('keystore')
+          }).then((ks) => {
+            console.log('ks', ks)
+            postMessage({
+              event: 'KEYSTORE_SAVED',
+              payload: { keystore: ks }
+            })
+          }).catch((error) => this.handleErrorMessage({ error }))
+          break;
         default:
           this.handleErrorMessage({
             error: `Invalid Event: ${event}`

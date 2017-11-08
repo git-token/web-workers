@@ -52,16 +52,22 @@ var GitTokenWalletWorker = function () {
             payload = _JSON$parse.payload;
 
         switch (event) {
-          // case 'WALLET_CREATE_KEYSTORE':
-          //   const { password } = payload
-          //   console.log('password', password)
-          //   this.createKeystore({ password }).then((addresses) => {
-          //     postMessage(JSON.stringify({
-          //       event: 'WALLET_ADDRESSES',
-          //       payload: addresses
-          //     }))
-          //   }).catch((error) => this.handleErrorMessage({ error }))
-          //   break;
+          case 'SAVE_KEYSTORE':
+            _this.db.put({
+              _id: 'keystore',
+              serialized: payload['serialized']
+            }).then(function () {
+              return _this.db.get('keystore');
+            }).then(function (ks) {
+              console.log('ks', ks);
+              postMessage({
+                event: 'KEYSTORE_SAVED',
+                payload: { keystore: ks }
+              });
+            }).catch(function (error) {
+              return _this.handleErrorMessage({ error: error });
+            });
+            break;
           default:
             _this.handleErrorMessage({
               error: 'Invalid Event: ' + event
