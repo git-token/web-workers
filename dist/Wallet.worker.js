@@ -58,11 +58,11 @@ var GitTokenWalletWorker = function () {
       var password = _ref2.password;
 
       return new _bluebird2.default(function (resolve, reject) {
+        console.log('password', password);
         _ethLightwallet.keystore.createVault({ password: password }, function (error, ks) {
           if (error) {
             reject(error);
           }
-          console.log('ks', ks);
           ks.keyFromPassword(password, function (error, derivedKey) {
             if (error) {
               reject(error);
