@@ -2,7 +2,7 @@ import Promise, { promisifyAll } from 'bluebird'
 
 import Tx from 'ethereumjs-tx'
 import { ecsign, sha3 } from 'ethereumjs-util'
-import { keystore, signing } from 'eth-lightwallet'
+import { keystore, signing } from 'eth-lightwallet/dist/index'
 
 import request from 'browser-request'
 import PouchDB from 'pouchdb'
