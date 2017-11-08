@@ -63,6 +63,7 @@ var GitTokenWalletWorker = function () {
             reject(error);
           }
           ks.keyFromPassword(password, function (error, derivedKey) {
+            console.log('derivedKey', derivedKey);
             if (error) {
               reject(error);
             }
@@ -73,6 +74,7 @@ var GitTokenWalletWorker = function () {
               console.log('doc', doc);
               resolve(doc.addresses);
             }).catch(function (error) {
+              console.log('error', error);
               reject(error);
             });
           });

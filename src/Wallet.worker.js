@@ -28,6 +28,7 @@ export default class GitTokenWalletWorker {
       keystore.createVault({ password }, (error, ks) => {
         if (error) { reject(error) }
         ks.keyFromPassword(password, (error, derivedKey) => {
+          console.log('derivedKey', derivedKey)
           if (error) { reject(error) }
           ks.generateNewAddress(derivedKey, 3);
           this.db.bulkDocs([
@@ -39,6 +40,7 @@ export default class GitTokenWalletWorker {
             console.log('doc', doc)
             resolve(doc.addresses)
           }).catch((error) => {
+            console.log('error', error)
             reject(error)
           })
         })
