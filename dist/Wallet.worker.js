@@ -16,7 +16,7 @@ var _ethereumjsTx2 = _interopRequireDefault(_ethereumjsTx);
 
 var _ethereumjsUtil = require('ethereumjs-util');
 
-var _keythereum = require('keythereum/dist/keythereum');
+var _keythereum = require('../node_modules/keythereum/dist/keythereum');
 
 var _keythereum2 = _interopRequireDefault(_keythereum);
 
