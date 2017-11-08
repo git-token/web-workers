@@ -1,6 +1,6 @@
 {
   "name": "gittoken-web-workers",
-  "version": "0.0.34",
+  "version": "0.0.35",
   "description": "GitToken Web Workers",
   "main": "./dist/index.js",
   "scripts": {
