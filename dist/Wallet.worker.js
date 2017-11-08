@@ -16,9 +16,7 @@ var _ethereumjsTx2 = _interopRequireDefault(_ethereumjsTx);
 
 var _ethereumjsUtil = require('ethereumjs-util');
 
-var _keythereum = require('../node_modules/keythereum/dist/keythereum');
-
-var _keythereum2 = _interopRequireDefault(_keythereum);
+var _lightwalletMin = require('eth-lightwallet/dist/lightwallet.min.js');
 
 var _browserRequest = require('browser-request');
 
@@ -55,46 +53,36 @@ var GitTokenWalletWorker = function () {
   _createClass(GitTokenWalletWorker, [{
     key: 'createKeystore',
     value: function createKeystore(_ref2) {
+      var _this = this;
+
       var password = _ref2.password;
 
       return new _bluebird2.default(function (resolve, reject) {
-        try {
-          _keythereum2.default.create({ keyBytes: 64, ivBytes: 32 }, function (dk) {
-            console.log('dk', dk);
-            _keythereum2.default.dump(password, dk.privateKey, dk.salt, dk.iv, {}, function (keyObject) {
-              console.log('keyObject', keyObject);
-              resolve(keyObject);
+        _lightwalletMin.keystore.createVault({ password: password }, function (error, ks) {
+          if (error) {
+            reject(error);
+          }
+          ks.keyFromPassword(password, function (error, derivedKey) {
+            if (error) {
+              reject(error);
+            }
+            ks.generateNewAddress(derivedKey, 3);
+            _this.db.bulkDocs([{ _id: 'keystore', keystore: ks.serialize() }, { _id: 'addresses', addresses: ks.getAddresses() }]).then(function () {
+              return _this.db.get('addresses');
+            }).then(function (doc) {
+              console.log('doc', doc);
+              resolve(doc.addresses);
+            }).catch(function (error) {
+              reject(error);
             });
           });
-        } catch (error) {
-          console.log('error', error);
-          reject(error);
-        }
-
-        // keystore.createVault({ password }, (error, ks) => {
-        //   if (error) { reject(error) }
-        //   ks.keyFromPassword(password, (error, derivedKey) => {
-        //     if (error) { reject(error) }
-        //     ks.generateNewAddress(derivedKey, 3);
-        //     this.db.bulkDocs([
-        //       { _id: 'keystore', keystore: ks.serialize() },
-        //       { _id: 'addresses', addresses: ks.getAddresses() },
-        //     ]).then(() => {
-        //       return this.db.get('addresses')
-        //     }).then((doc) => {
-        //       console.log('doc', doc)
-        //       resolve(doc.addresses)
-        //     }).catch((error) => {
-        //       reject(error)
-        //     })
-        //   })
-        // })
+        });
       });
     }
   }, {
     key: 'listen',
     value: function listen() {
-      var _this = this;
+      var _this2 = this;
 
       console.log('GitToken Wallet Web Worker Listening for Events');
       addEventListener('message', function (msg) {
@@ -107,17 +95,17 @@ var GitTokenWalletWorker = function () {
             var password = payload.password;
 
             console.log('password', password);
-            _this.createKeystore({ password: password }).then(function (addresses) {
+            _this2.createKeystore({ password: password }).then(function (addresses) {
               postMessage(JSON.stringify({
                 event: 'WALLET_ADDRESSES',
                 payload: addresses
               }));
             }).catch(function (error) {
-              return _this.handleErrorMessage({ error: error });
+              return _this2.handleErrorMessage({ error: error });
             });
             break;
           default:
-            _this.handleErrorMessage({
+            _this2.handleErrorMessage({
               error: 'Invalid Event: ' + event
             });
         }
