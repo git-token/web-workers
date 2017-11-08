@@ -127,6 +127,7 @@ var GitTokenWalletWorker = function () {
     value: function handleErrorMessage(_ref3) {
       var error = _ref3.error;
 
+      console.log('error', error);
       postMessage(JSON.stringify({
         error: error ? error : 'Unhandled Error'
       }));

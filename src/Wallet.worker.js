@@ -80,6 +80,7 @@ export default class GitTokenWalletWorker {
   }
 
   handleErrorMessage({ error }) {
+    console.log('error', error)
     postMessage(JSON.stringify({
       error: error ? error : 'Unhandled Error'
     }))
