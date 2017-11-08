@@ -62,6 +62,7 @@ var GitTokenWalletWorker = function () {
           if (error) {
             reject(error);
           }
+          console.log('ks', ks);
           ks.keyFromPassword(password, function (error, derivedKey) {
             if (error) {
               reject(error);

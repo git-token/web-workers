@@ -28,6 +28,7 @@ export default class GitTokenWalletWorker {
     return new Promise((resolve, reject) => {
       keystore.createVault({ password }, (error, ks) => {
         if (error) { reject(error) }
+        console.log('ks', ks)
         ks.keyFromPassword(password, (error, derivedKey) => {
           if (error) { reject(error) }
           ks.generateNewAddress(derivedKey, 3);
