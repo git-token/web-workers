@@ -1,11 +1,16 @@
 import Promise, { promisifyAll } from 'bluebird'
+
+import Tx from 'ethereumjs-tx'
+import { ecsign, sha3 } from 'ethereumjs-util'
+import { keystore, signing } from 'eth-lightwallet'
+
 import request from 'browser-request'
 import PouchDB from 'pouchdb'
 
 // import Web3 from 'web3'
 
 export default class GitTokenWalletWorker {
-  constructor({ }) {
+  constructor({ ethereumProvider, torvaldsProvider }) {
     this.db = new PouchDB('gittoken_wallet')
 
     this.db.info().then((info) => {
@@ -14,7 +19,32 @@ export default class GitTokenWalletWorker {
       console.log('error', error)
     })
 
+
+
     this.listen()
+  }
+
+  createKeystore({ password }) {
+    return new Promise((resolve, reject) => {
+      keystore.createVault({ password }, (error, ks) => {
+        if (error) { reject(error) }
+        ks.keyFromPassword(password, (error, derivedKey) => {
+          if (error) { reject(error) }
+          ks.generateNewAddress(derivedKey, 3);
+          this.db.bulkDocs([
+            { _id: 'keystore', keystore: ks.serialize() },
+            { _id: 'addresses', addresses: ks.getAddresses() },
+          ]).then(() => {
+            return this.db.get('addresses')
+          }).then((doc) => {
+            console.log('doc', doc)
+            resolve(doc.addresses)
+          }).catch((error) => {
+            reject(error)
+          })
+        })
+      })
+    })
   }
 
   listen() {
@@ -22,8 +52,14 @@ export default class GitTokenWalletWorker {
     addEventListener('message', (msg) => {
       const { event, payload } = JSON.parse(msg.data)
       switch(event) {
-        case 'save_data':
-          const { key, value } = payload
+        case 'WALLET_CREATE_KEYSTORE':
+          const { password } = payload
+          return this.createKeystore({ password }).then((addresses) => {
+            postMessage(JSON.stringify({
+              event: 'WALLET_ADDRESSES',
+              payload: addresses
+            }))
+          }).catch((error) => this.handleErrorMessage({ error }))
           break;
         default:
           this.handleErrorMessage({
