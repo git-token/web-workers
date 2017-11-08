@@ -1,13 +1,18 @@
 import Promise, { promisifyAll } from 'bluebird'
 import request from 'browser-request'
+import PouchDB from 'pouchdb'
 
 // import Web3 from 'web3'
 
 export default class GitTokenWalletWorker {
   constructor({ }) {
-    this.db = indexDB.open('gittoken-wallet')
+    this.db = new PouchDB('gittoken_wallet')
 
-    console.log('this.db', this.db)
+    this.db.info().then((info) => {
+      console.log('info', info)
+    }).catch((error) => {
+      console.log('error', error)
+    })
 
     this.listen()
   }

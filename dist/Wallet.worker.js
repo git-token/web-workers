@@ -14,6 +14,10 @@ var _browserRequest = require('browser-request');
 
 var _browserRequest2 = _interopRequireDefault(_browserRequest);
 
+var _pouchdb = require('pouchdb');
+
+var _pouchdb2 = _interopRequireDefault(_pouchdb);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
@@ -28,9 +32,13 @@ var GitTokenWalletWorker = function () {
 
     _classCallCheck(this, GitTokenWalletWorker);
 
-    this.db = indexDB.open('gittoken-wallet');
+    this.db = new _pouchdb2.default('gittoken_wallet');
 
-    console.log('this.db', this.db);
+    this.db.info().then(function (info) {
+      console.log('info', info);
+    }).catch(function (error) {
+      console.log('error', error);
+    });
 
     this.listen();
   }
