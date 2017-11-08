@@ -1,6 +1,7 @@
 import Promise, { promisifyAll } from 'bluebird'
 import request from 'browser-request'
 import leveljs from 'level-js'
+import levelup from 'levelup'
 
 // import Web3 from 'web3'
 

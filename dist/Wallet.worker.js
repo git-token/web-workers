@@ -18,6 +18,10 @@ var _levelJs = require('level-js');
 
 var _levelJs2 = _interopRequireDefault(_levelJs);
 
+var _levelup = require('levelup');
+
+var _levelup2 = _interopRequireDefault(_levelup);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
@@ -32,7 +36,7 @@ var GitTokenWalletWorker = function () {
 
     _classCallCheck(this, GitTokenWalletWorker);
 
-    this.db = levelup('gittoken-wallet', { db: _levelJs2.default });
+    this.db = (0, _levelup2.default)('gittoken-wallet', { db: _levelJs2.default });
 
     this.dbWriteStream = this.db.createWriteStream();
     this.dbReadStream = this.db.createReadStream();
