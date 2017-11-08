@@ -10,12 +10,6 @@ var _bluebird = require('bluebird');
 
 var _bluebird2 = _interopRequireDefault(_bluebird);
 
-var _ethereumjsTx = require('ethereumjs-tx');
-
-var _ethereumjsTx2 = _interopRequireDefault(_ethereumjsTx);
-
-var _ethereumjsUtil = require('ethereumjs-util');
-
 var _browserRequest = require('browser-request');
 
 var _browserRequest2 = _interopRequireDefault(_browserRequest);
@@ -24,13 +18,9 @@ var _pouchdb = require('pouchdb');
 
 var _pouchdb2 = _interopRequireDefault(_pouchdb);
 
-var _lightwalletMin = require('eth-lightwallet/dist/lightwallet.min.js');
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-var window = {};
 
 var GitTokenWalletWorker = function () {
   function GitTokenWalletWorker(_ref) {
@@ -51,40 +41,9 @@ var GitTokenWalletWorker = function () {
   }
 
   _createClass(GitTokenWalletWorker, [{
-    key: 'createKeystore',
-    value: function createKeystore(_ref2) {
-      var _this = this;
-
-      var password = _ref2.password;
-
-      return new _bluebird2.default(function (resolve, reject) {
-        _lightwalletMin.keystore.createVault({ password: password }, function (error, ks) {
-          if (error) {
-            reject(error);
-          }
-          ks.keyFromPassword(password, function (error, derivedKey) {
-            console.log('derivedKey', derivedKey);
-            if (error) {
-              reject(error);
-            }
-            ks.generateNewAddress(derivedKey, 3);
-            _this.db.bulkDocs([{ _id: 'keystore', keystore: ks.serialize() }, { _id: 'addresses', addresses: ks.getAddresses() }]).then(function () {
-              return _this.db.get('addresses');
-            }).then(function (doc) {
-              console.log('doc', doc);
-              resolve(doc.addresses);
-            }).catch(function (error) {
-              console.log('error', error);
-              reject(error);
-            });
-          });
-        });
-      });
-    }
-  }, {
     key: 'listen',
     value: function listen() {
-      var _this2 = this;
+      var _this = this;
 
       console.log('GitToken Wallet Web Worker Listening for Events');
       addEventListener('message', function (msg) {
@@ -93,21 +52,18 @@ var GitTokenWalletWorker = function () {
             payload = _JSON$parse.payload;
 
         switch (event) {
-          case 'WALLET_CREATE_KEYSTORE':
-            var password = payload.password;
-
-            console.log('password', password);
-            _this2.createKeystore({ password: password }).then(function (addresses) {
-              postMessage(JSON.stringify({
-                event: 'WALLET_ADDRESSES',
-                payload: addresses
-              }));
-            }).catch(function (error) {
-              return _this2.handleErrorMessage({ error: error });
-            });
-            break;
+          // case 'WALLET_CREATE_KEYSTORE':
+          //   const { password } = payload
+          //   console.log('password', password)
+          //   this.createKeystore({ password }).then((addresses) => {
+          //     postMessage(JSON.stringify({
+          //       event: 'WALLET_ADDRESSES',
+          //       payload: addresses
+          //     }))
+          //   }).catch((error) => this.handleErrorMessage({ error }))
+          //   break;
           default:
-            _this2.handleErrorMessage({
+            _this.handleErrorMessage({
               error: 'Invalid Event: ' + event
             });
         }
@@ -124,8 +80,8 @@ var GitTokenWalletWorker = function () {
     }
   }, {
     key: 'handleErrorMessage',
-    value: function handleErrorMessage(_ref3) {
-      var error = _ref3.error;
+    value: function handleErrorMessage(_ref2) {
+      var error = _ref2.error;
 
       console.log('error', error);
       postMessage(JSON.stringify({
