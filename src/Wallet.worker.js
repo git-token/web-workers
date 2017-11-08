@@ -2,7 +2,7 @@ import Promise, { promisifyAll } from 'bluebird'
 
 import Tx from 'ethereumjs-tx'
 import { ecsign, sha3 } from 'ethereumjs-util'
-import keythereum from 'keythereum'
+import keythereum from 'keythereum/dist/keythereum.min.js'
 import request from 'browser-request'
 import PouchDB from 'pouchdb'
 
