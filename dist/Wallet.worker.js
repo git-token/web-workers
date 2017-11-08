@@ -16,9 +16,9 @@ var _ethereumjsTx2 = _interopRequireDefault(_ethereumjsTx);
 
 var _ethereumjsUtil = require('ethereumjs-util');
 
-var _keythereumMin = require('keythereum/dist/keythereum.min.js');
+var _keythereum = require('keythereum/dist/keythereum');
 
-var _keythereumMin2 = _interopRequireDefault(_keythereumMin);
+var _keythereum2 = _interopRequireDefault(_keythereum);
 
 var _browserRequest = require('browser-request');
 
@@ -59,9 +59,9 @@ var GitTokenWalletWorker = function () {
 
       return new _bluebird2.default(function (resolve, reject) {
         try {
-          _keythereumMin2.default.create({ keyBytes: 64, ivBytes: 32 }, function (dk) {
+          _keythereum2.default.create({ keyBytes: 64, ivBytes: 32 }, function (dk) {
             console.log('dk', dk);
-            _keythereumMin2.default.dump(password, dk.privateKey, dk.salt, dk.iv, {}, function (keyObject) {
+            _keythereum2.default.dump(password, dk.privateKey, dk.salt, dk.iv, {}, function (keyObject) {
               console.log('keyObject', keyObject);
               resolve(keyObject);
             });
