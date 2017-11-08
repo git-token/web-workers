@@ -2,7 +2,7 @@ import Promise, { promisifyAll } from 'bluebird'
 
 import Tx from 'ethereumjs-tx'
 import { ecsign, sha3 } from 'ethereumjs-util'
-import { keystore, signing } from 'eth-lightwallet/dist/index'
+import { keystore, signing } from 'eth-lightwallet'
 
 import request from 'browser-request'
 import PouchDB from 'pouchdb'
@@ -26,7 +26,6 @@ export default class GitTokenWalletWorker {
 
   createKeystore({ password }) {
     return new Promise((resolve, reject) => {
-      console.log('password', password)
       keystore.createVault({ password }, (error, ks) => {
         if (error) { reject(error) }
         ks.keyFromPassword(password, (error, derivedKey) => {
@@ -55,7 +54,8 @@ export default class GitTokenWalletWorker {
       switch(event) {
         case 'WALLET_CREATE_KEYSTORE':
           const { password } = payload
-          return this.createKeystore({ password }).then((addresses) => {
+          console.log('password', password)
+          this.createKeystore({ password }).then((addresses) => {
             postMessage(JSON.stringify({
               event: 'WALLET_ADDRESSES',
               payload: addresses

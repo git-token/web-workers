@@ -16,7 +16,7 @@ var _ethereumjsTx2 = _interopRequireDefault(_ethereumjsTx);
 
 var _ethereumjsUtil = require('ethereumjs-util');
 
-var _index = require('eth-lightwallet/dist/index');
+var _ethLightwallet = require('eth-lightwallet');
 
 var _browserRequest = require('browser-request');
 
@@ -58,8 +58,7 @@ var GitTokenWalletWorker = function () {
       var password = _ref2.password;
 
       return new _bluebird2.default(function (resolve, reject) {
-        console.log('password', password);
-        _index.keystore.createVault({ password: password }, function (error, ks) {
+        _ethLightwallet.keystore.createVault({ password: password }, function (error, ks) {
           if (error) {
             reject(error);
           }
@@ -95,7 +94,8 @@ var GitTokenWalletWorker = function () {
           case 'WALLET_CREATE_KEYSTORE':
             var password = payload.password;
 
-            return _this2.createKeystore({ password: password }).then(function (addresses) {
+            console.log('password', password);
+            _this2.createKeystore({ password: password }).then(function (addresses) {
               postMessage(JSON.stringify({
                 event: 'WALLET_ADDRESSES',
                 payload: addresses
