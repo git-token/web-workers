@@ -47,9 +47,9 @@ var GitTokenWalletWorker = function () {
 
       console.log('GitToken Wallet Web Worker Listening for Events');
       addEventListener('message', function (msg) {
-        var _JSON$parse = JSON.parse(msg.data),
-            event = _JSON$parse.event,
-            payload = _JSON$parse.payload;
+        var _msg$data = msg.data,
+            event = _msg$data.event,
+            payload = _msg$data.payload;
 
         switch (event) {
           case 'SAVE_KEYSTORE':
@@ -79,10 +79,10 @@ var GitTokenWalletWorker = function () {
     key: 'setConfig',
     value: function setConfig(config) {
       console.log('GitTokenWalletWorker::setConfig::config', config);
-      postMessage(JSON.stringify({
+      postMessage({
         event: 'configured',
         payload: { configured: true }
-      }));
+      });
     }
   }, {
     key: 'handleErrorMessage',
@@ -90,9 +90,9 @@ var GitTokenWalletWorker = function () {
       var error = _ref2.error;
 
       console.log('error', error);
-      postMessage(JSON.stringify({
+      postMessage({
         error: error ? error : 'Unhandled Error'
-      }));
+      });
     }
   }]);
 

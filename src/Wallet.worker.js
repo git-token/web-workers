@@ -22,7 +22,7 @@ export default class GitTokenWalletWorker {
   listen() {
     console.log('GitToken Wallet Web Worker Listening for Events')
     addEventListener('message', (msg) => {
-      const { event, payload } = JSON.parse(msg.data)
+      const { data: { event, payload } } = msg
       switch(event) {
         case 'SAVE_KEYSTORE':
           this.db.put({
@@ -48,17 +48,17 @@ export default class GitTokenWalletWorker {
 
   setConfig(config) {
     console.log('GitTokenWalletWorker::setConfig::config', config)
-    postMessage(JSON.stringify({
+    postMessage({
       event: 'configured',
       payload: { configured: true }
-    }))
+    })
   }
 
   handleErrorMessage({ error }) {
     console.log('error', error)
-    postMessage(JSON.stringify({
+    postMessage({
       error: error ? error : 'Unhandled Error'
-    }))
+    })
   }
 
 }
