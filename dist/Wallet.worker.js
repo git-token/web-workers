@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _bluebird = require('bluebird');
@@ -53,26 +55,55 @@ var GitTokenWalletWorker = function () {
 
         switch (event) {
           case 'SAVE_KEYSTORE':
-            _this.db.put({
-              _id: 'keystore',
-              serialized: payload['serialized']
-            }).then(function () {
-              return _this.db.get('keystore');
-            }).then(function (ks) {
-              console.log('ks', ks);
-              postMessage({
-                event: 'KEYSTORE_SAVED',
-                payload: { keystore: ks }
-              });
-            }).catch(function (error) {
-              return _this.handleErrorMessage({ error: error });
-            });
+            _this.saveKeystore(_extends({}, payload));
+            break;
+          case 'RETRIEVE_KEYSTORE':
+            _this.retrieveKeystore();
             break;
           default:
             _this.handleErrorMessage({
               error: 'Invalid Event: ' + event
             });
         }
+      });
+    }
+  }, {
+    key: 'saveKeystore',
+    value: function saveKeystore(_ref2) {
+      var _this2 = this;
+
+      var serialized = _ref2.serialized;
+
+      this.db.put({
+        _id: 'keystore',
+        serialized: serialized
+      }).then(function () {
+        return _this2.db.get('keystore');
+      }).then(function (ks) {
+        postMessage({
+          event: 'KEYSTORE_SAVED',
+          payload: { keystore: ks }
+        });
+        return null;
+      }).catch(function (error) {
+        _this2.handleErrorMessage({ error: error });
+      });
+    }
+  }, {
+    key: 'retrieveKeystore',
+    value: function retrieveKeystore() {
+      var _this3 = this;
+
+      this.db.get('keystore').then(function (ks) {
+        postMessage({
+          event: 'SERIALIZED_KEYSTORE',
+          payload: {
+            serialized: ks
+          }
+        });
+        return null;
+      }).catch(function (error) {
+        _this3.handleErrorMessage({ error: error });
       });
     }
   }, {
@@ -86,13 +117,17 @@ var GitTokenWalletWorker = function () {
     }
   }, {
     key: 'handleErrorMessage',
-    value: function handleErrorMessage(_ref2) {
-      var error = _ref2.error;
+    value: function handleErrorMessage(_ref3) {
+      var error = _ref3.error;
 
       console.log('error', error);
       postMessage({
-        error: error ? error : 'Unhandled Error'
+        event: 'WALLET_WORKER_ERROR',
+        payload: {
+          error: error ? error : 'Unhandled Error'
+        }
       });
+      return null;
     }
   }]);
 

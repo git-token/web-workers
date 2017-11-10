@@ -25,24 +25,47 @@ export default class GitTokenWalletWorker {
       const { data: { event, payload } } = msg
       switch(event) {
         case 'SAVE_KEYSTORE':
-          this.db.put({
-            _id: 'keystore',
-            serialized: payload['serialized']
-          }).then(() => {
-            return this.db.get('keystore')
-          }).then((ks) => {
-            console.log('ks', ks)
-            postMessage({
-              event: 'KEYSTORE_SAVED',
-              payload: { keystore: ks }
-            })
-          }).catch((error) => this.handleErrorMessage({ error }))
+          this.saveKeystore({ ...payload })
+          break;
+        case 'RETRIEVE_KEYSTORE':
+          this.retrieveKeystore()
           break;
         default:
           this.handleErrorMessage({
             error: `Invalid Event: ${event}`
           })
       }
+    })
+  }
+
+  saveKeystore({ serialized }) {
+    this.db.put({
+      _id: 'keystore',
+      serialized: serialized
+    }).then(() => {
+      return this.db.get('keystore')
+    }).then((ks) => {
+      postMessage({
+        event: 'KEYSTORE_SAVED',
+        payload: { keystore: ks }
+      })
+      return null
+    }).catch((error) => {
+      this.handleErrorMessage({ error })
+    })
+  }
+
+  retrieveKeystore() {
+    this.db.get('keystore').then((ks) => {
+      postMessage({
+        event: 'SERIALIZED_KEYSTORE',
+        payload: {
+          serialized: ks
+        }
+      })
+      return null
+    }).catch((error) => {
+      this.handleErrorMessage({ error })
     })
   }
 
@@ -57,8 +80,12 @@ export default class GitTokenWalletWorker {
   handleErrorMessage({ error }) {
     console.log('error', error)
     postMessage({
-      error: error ? error : 'Unhandled Error'
+      event: 'WALLET_WORKER_ERROR',
+      payload: {
+        error: error ? error : 'Unhandled Error'
+      }
     })
+    return null
   }
 
 }
