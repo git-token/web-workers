@@ -8,10 +8,10 @@ export default class GitTokenAccountWorker {
   listen() {
     console.log('GitToken Account Web Worker Listening for Events')
     addEventListener('message', (msg) => {
-      const { data: { event, payload } } = msg
-      switch(event) {
+      const { data: { type, value } } = msg
+      switch(type) {
         case 'GET_PROFILE':
-          return this.getProfile({ url: payload })
+          return this.getProfile({ url: value })
           break;
         default:
           throw new Error('Invalid Event for Web Worker')

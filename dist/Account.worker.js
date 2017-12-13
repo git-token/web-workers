@@ -33,12 +33,12 @@ var GitTokenAccountWorker = function () {
       console.log('GitToken Account Web Worker Listening for Events');
       addEventListener('message', function (msg) {
         var _msg$data = msg.data,
-            event = _msg$data.event,
-            payload = _msg$data.payload;
+            type = _msg$data.type,
+            value = _msg$data.value;
 
-        switch (event) {
+        switch (type) {
           case 'GET_PROFILE':
-            return _this.getProfile({ url: payload });
+            return _this.getProfile({ url: value });
             break;
           default:
             throw new Error('Invalid Event for Web Worker');
