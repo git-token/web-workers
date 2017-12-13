@@ -43,10 +43,14 @@ var GitTokenAccountWorker = function () {
 
 
         console.log('type', type);
+        console.log('value', value);
 
         switch (type) {
           case 'GET_PROFILE':
             return _this.getProfile({ url: value });
+            break;
+          case 'webpackOk':
+            console.log('Webpack setup');
             break;
           default:
             throw new Error('Invalid Type for Web Worker: ' + type);
