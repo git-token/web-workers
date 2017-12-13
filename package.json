@@ -19,6 +19,7 @@
   "author": "Ryan Tate <ryan.tate@gittoken.io>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.17.1",
     "babel-plugin-transform-react-constant-elements": "^6.23.0",
     "bluebird": "^3.5.1",
     "browser-request": "^0.3.3",
