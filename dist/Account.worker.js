@@ -51,12 +51,14 @@ var GitTokenAccountWorker = function () {
       var url = _ref2.url;
 
       (0, _axios2.default)({ method: 'GET', url: url }).then(function (result) {
-        postMessage(JSON.stringify({
-          event: 'GET_PROFILE',
-          payload: result
-        }));
+        postMessage({
+          type: 'SET_ACCOUNT_DETAILS',
+          id: 'profile',
+          value: result
+        });
         return null;
       }).catch(function (error) {
+        console.log('error', error);
         throw error;
       });
     }
