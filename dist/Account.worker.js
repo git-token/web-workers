@@ -6,6 +6,12 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -35,39 +41,23 @@ var GitTokenAccountWorker = function () {
             return _this.getProfile({ url: payload });
             break;
           default:
-            return _this.handleErrorMessage({
-              error: 'Invalid Event: ' + event
-            });
+            throw new Error('Invalid Event for Web Worker');
         }
       });
     }
   }, {
-    key: 'handleErrorMessage',
-    value: function handleErrorMessage(_ref2) {
-      var error = _ref2.error;
-
-      postMessage(JSON.stringify({
-        error: error ? error : 'Unhandled Error'
-      }));
-      return null;
-    }
-  }, {
     key: 'getProfile',
-    value: function getProfile(_ref3) {
-      var _this2 = this;
+    value: function getProfile(_ref2) {
+      var url = _ref2.url;
 
-      var url = _ref3.url;
-
-      axios({ method: 'GET', url: url }).then(function (result) {
+      (0, _axios2.default)({ method: 'GET', url: url }).then(function (result) {
         postMessage(JSON.stringify({
           event: 'GET_PROFILE',
           payload: result
         }));
         return null;
       }).catch(function (error) {
-        return _this2.handleErrorMessage({
-          error: 'Invalid Event: ' + event
-        });
+        throw error;
       });
     }
   }]);

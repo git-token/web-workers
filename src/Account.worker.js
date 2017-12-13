@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default class GitTokenAccountWorker {
   constructor({ }) {
     this.listen()
@@ -12,18 +14,9 @@ export default class GitTokenAccountWorker {
           return this.getProfile({ url: payload })
           break;
         default:
-          return this.handleErrorMessage({
-            error: `Invalid Event: ${event}`
-          })
+          throw new Error('Invalid Event for Web Worker')
       }
     })
-  }
-
-  handleErrorMessage({ error }) {
-    postMessage(JSON.stringify({
-      error: error ? error : 'Unhandled Error'
-    }))
-    return null;
   }
 
   getProfile({ url }) {
@@ -34,9 +27,7 @@ export default class GitTokenAccountWorker {
       }))
       return null;
     }).catch((error) => {
-      return this.handleErrorMessage({
-        error: `Invalid Event: ${event}`
-      })
+      throw error
     })
   }
 
