@@ -25,11 +25,12 @@ export default class GitTokenAccountWorker {
 
   getProfile({ url }) {
     axios({ method: 'GET', url }).then((result) => {
-      postMessage({
+      console.log('result', result)
+      postMessage(JSON.stringify({
         type: 'SET_ACCOUNT_DETAILS',
         id: 'profile',
         value: result
-      })
+      }))
       return null;
     }).catch((error) => {
       console.error(error)
