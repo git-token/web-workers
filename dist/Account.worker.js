@@ -54,12 +54,13 @@ var GitTokenAccountWorker = function () {
     value: function getProfile(_ref2) {
       var url = _ref2.url;
 
-      (0, _axios2.default)({ method: 'GET', url: url }).then(function (result) {
-        console.log('result', result);
+      (0, _axios2.default)({ method: 'GET', url: url }).then(function (_ref3) {
+        var data = _ref3.data;
+
         postMessage(JSON.stringify({
           type: 'SET_ACCOUNT_DETAILS',
           id: 'profile',
-          value: result
+          value: data
         }));
         return null;
       }).catch(function (error) {
