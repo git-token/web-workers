@@ -36,15 +36,16 @@ var GitTokenAccountWorker = function () {
             type = _msg$data.type,
             value = _msg$data.value;
 
-
-        switch (type) {
-          case 'GET_PROFILE':
-            return _this.getProfile({ url: value });
-            break;
-          case 'webpackOk':
-            break;
-          default:
-            console.error(new Error('Invalid Type for Web Worker: ' + type));
+        if (type) {
+          switch (type) {
+            case 'GET_PROFILE':
+              return _this.getProfile({ url: value });
+              break;
+            case 'webpackOk':
+              break;
+            default:
+              console.error(new Error('Invalid Type for Web Worker: ' + type));
+          }
         }
       });
     }

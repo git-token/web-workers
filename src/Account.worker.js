@@ -9,15 +9,16 @@ export default class GitTokenAccountWorker {
     console.log('GitToken Account Web Worker Listening for Events')
     addEventListener('message', (msg) => {
       const { type, value } = msg.data
-
-      switch(type) {
-        case 'GET_PROFILE':
-          return this.getProfile({ url: value })
-          break;
-        case 'webpackOk':
-          break;
-        default:
-          console.error(new Error(`Invalid Type for Web Worker: ${type}`))
+      if (type) {
+        switch(type) {
+          case 'GET_PROFILE':
+            return this.getProfile({ url: value })
+            break;
+          case 'webpackOk':
+            break;
+          default:
+            console.error(new Error(`Invalid Type for Web Worker: ${type}`))
+        }
       }
     })
   }
