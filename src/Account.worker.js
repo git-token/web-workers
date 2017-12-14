@@ -8,7 +8,7 @@ export default class GitTokenAccountWorker {
   listen() {
     console.log('GitToken Account Web Worker Listening for Events')
     addEventListener('message', (msg) => {
-      const { type, value } = JSON.parse(msg.data)
+      const { type, value } = msg.data
 
       switch(type) {
         case 'GET_PROFILE':
@@ -17,22 +17,21 @@ export default class GitTokenAccountWorker {
         case 'webpackOk':
           break;
         default:
-          throw new Error(`Invalid Type for Web Worker: ${type}`)
+          console.error(new Error(`Invalid Type for Web Worker: ${type}`))
       }
     })
   }
 
   getProfile({ url }) {
     axios({ method: 'GET', url }).then((result) => {
-      postMessage(JSON.stringify({
+      postMessage({
         type: 'SET_ACCOUNT_DETAILS',
         id: 'profile',
         value: result
-      }))
+      })
       return null;
     }).catch((error) => {
-      console.log('error', error)
-      throw error
+      console.error(error)
     })
   }
 

@@ -32,9 +32,10 @@ var GitTokenAccountWorker = function () {
 
       console.log('GitToken Account Web Worker Listening for Events');
       addEventListener('message', function (msg) {
-        var _JSON$parse = JSON.parse(msg.data),
-            type = _JSON$parse.type,
-            value = _JSON$parse.value;
+        var _msg$data = msg.data,
+            type = _msg$data.type,
+            value = _msg$data.value;
+
 
         switch (type) {
           case 'GET_PROFILE':
@@ -43,7 +44,7 @@ var GitTokenAccountWorker = function () {
           case 'webpackOk':
             break;
           default:
-            throw new Error('Invalid Type for Web Worker: ' + type);
+            console.error(new Error('Invalid Type for Web Worker: ' + type));
         }
       });
     }
@@ -53,15 +54,14 @@ var GitTokenAccountWorker = function () {
       var url = _ref2.url;
 
       (0, _axios2.default)({ method: 'GET', url: url }).then(function (result) {
-        postMessage(JSON.stringify({
+        postMessage({
           type: 'SET_ACCOUNT_DETAILS',
           id: 'profile',
           value: result
-        }));
+        });
         return null;
       }).catch(function (error) {
-        console.log('error', error);
-        throw error;
+        console.error(error);
       });
     }
   }]);
