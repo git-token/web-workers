@@ -1,7 +1,19 @@
 import axios from 'axios'
 
+import {
+  accountVerified,
+  verifyAccount,
+  getProfile
+} from './gittoken/index'
+
 export default class GitTokenAccountWorker {
   constructor({ }) {
+
+    /* Bind Methods */ 
+    this.accountVerified = accountVerified.bind(this)
+    this.verifyAccount = verifyAccount.bind(this)
+    this.getProfile = getProfile.bind(this)
+
     this.listen()
   }
 
@@ -23,18 +35,6 @@ export default class GitTokenAccountWorker {
     })
   }
 
-  getProfile({ url }) {
-    axios({ method: 'GET', url }).then(({ data }) => {
-      postMessage(JSON.stringify({
-        type: 'SET_ACCOUNT_DETAILS',
-        id: 'profile',
-        value: data
-      }))
-      return null;
-    }).catch((error) => {
-      console.error(error)
-    })
-  }
 
 }
 

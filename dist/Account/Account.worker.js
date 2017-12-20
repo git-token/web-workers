@@ -10,6 +10,8 @@ var _axios = require('axios');
 
 var _axios2 = _interopRequireDefault(_axios);
 
+var _index = require('./gittoken/index');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _objectDestructuringEmpty(obj) { if (obj == null) throw new TypeError("Cannot destructure undefined"); }
@@ -21,6 +23,11 @@ var GitTokenAccountWorker = function () {
     _objectDestructuringEmpty(_ref);
 
     _classCallCheck(this, GitTokenAccountWorker);
+
+    /* Bind Methods */
+    this.accountVerified = _index.accountVerified.bind(this);
+    this.verifyAccount = _index.verifyAccount.bind(this);
+    this.getProfile = _index.getProfile.bind(this);
 
     this.listen();
   }
@@ -47,24 +54,6 @@ var GitTokenAccountWorker = function () {
               console.error(new Error('Invalid Type for Web Worker: ' + type));
           }
         }
-      });
-    }
-  }, {
-    key: 'getProfile',
-    value: function getProfile(_ref2) {
-      var url = _ref2.url;
-
-      (0, _axios2.default)({ method: 'GET', url: url }).then(function (_ref3) {
-        var data = _ref3.data;
-
-        postMessage(JSON.stringify({
-          type: 'SET_ACCOUNT_DETAILS',
-          id: 'profile',
-          value: data
-        }));
-        return null;
-      }).catch(function (error) {
-        console.error(error);
       });
     }
   }]);

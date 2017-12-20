@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.RegistryWorker = exports.WalletWorker = exports.VotingWorker = exports.AdminWorker = exports.AuctionWorker = undefined;
 
-var _AuctionWorker = require('./Auction.worker.js');
+var _AuctionWorker = require('./Account/Auction.worker.js');
 
 var _AuctionWorker2 = _interopRequireDefault(_AuctionWorker);
 
